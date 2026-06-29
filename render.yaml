@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: royal-grill
+    env: python
+    buildCommand: pip install -r BACKEND/requirements.txt
+    startCommand: cd BACKEND && gunicorn app:app
+    envVars:
+      - key: MYSQL_HOST
+        value: votre-host-mysql
+      - key: MYSQL_USER
+        value: votre-user
+      - key: MYSQL_PASSWORD
+        value: votre-password
+      - key: MYSQL_DB
+        value: royal_grill

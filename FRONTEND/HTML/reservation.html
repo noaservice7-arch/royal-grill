@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Réservation — Royal Grill</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/reservation.css">
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+</head>
+<body>
+
+  <!-- FOND VIDÉO -->
+  <div class="video-container">
+    <video autoplay muted loop playsinline id="bg-video">
+      <source src="../assets/video.mp4" type="video/mp4">
+    </video>
+    <div class="video-overlay"></div>
+  </div>
+
+  <!-- NAVIGATION -->
+  <nav>
+    <div class="logo" onclick="window.location.href='index.html'">
+      Royal <em>Grill</em>
+    </div>
+    <button class="nav-back" onclick="window.location.href='index.html'">
+      ← Retour
+    </button>
+  </nav>
+
+  <!-- CONTENU -->
+  <div class="res-container">
+
+    <div class="res-header">
+      <span class="res-tag">Votre expérience commence ici</span>
+      <h1 class="res-title">Réserver une <em>table</em></h1>
+      <div class="res-divider"></div>
+    </div>
+
+    <!-- FORMULAIRE -->
+    <div class="res-form">
+
+      <div class="form-grid">
+
+        <div class="form-group">
+          <label>Votre nom</label>
+          <input type="text" id="res-nom" placeholder="Ex: Jean Kouassi">
+        </div>
+
+        <div class="form-group">
+          <label>Adresse email</label>
+          <input type="email" id="res-email" placeholder="exemple@mail.com">
+        </div>
+
+        <div class="form-group">
+          <label>Numéro WhatsApp</label>
+          <input type="tel" id="res-whatsapp" placeholder="+225 07 68 10 91 51">
+        </div>
+
+        <div class="form-group">
+          <label>Type de table</label>
+          <select id="res-capacite">
+            <option value="">-- Choisir --</option>
+            <option value="2">Table de 2 personnes</option>
+            <option value="4">Table de 4 personnes</option>
+            <option value="6">Table de 6 personnes</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Date</label>
+          <input type="date" id="res-date">
+        </div>
+
+        <div class="form-group">
+          <label>Heure</label>
+          <input type="time" id="res-heure" min="10:00" max="23:00">
+        </div>
+
+        <div class="form-group">
+          <label>Formule</label>
+          <select id="res-formule" onchange="afficherOptionsVVIP()">
+            <option value="">-- Choisir --</option>
+            <option value="standard">Standard</option>
+            <option value="vip">VIP</option>
+            <option value="vvip">VVIP</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Occasion</label>
+          <select id="res-occasion">
+            <option value="">-- Choisir --</option>
+            <option value="romantique">💑 Romantique</option>
+            <option value="affaire">💼 Affaire</option>
+            <option value="famille">👨‍👩‍👧 Famille</option>
+            <option value="anniversaire">🎂 Anniversaire</option>
+            <option value="autre">✨ Autre</option>
+          </select>
+        </div>
+
+      </div>
+
+      <!-- OPTIONS VVIP -->
+      <div id="vvip-options" style="display:none">
+        <div class="vvip-title">✨ Personnalisation VVIP</div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Boisson d'accueil</label>
+            <input type="text" id="res-boisson" placeholder="Ex: Champagne, Jus...">
+          </div>
+          <div class="form-group">
+            <label>Décor de la table</label>
+            <input type="text" id="res-decor" placeholder="Ex: Roses rouges, Bougies...">
+          </div>
+          <div class="form-group">
+            <label>Ambiance musicale</label>
+            <input type="text" id="res-ambiance" placeholder="Ex: Jazz, Afrobeat...">
+          </div>
+          <div class="form-group">
+            <label>Surprise de fin</label>
+            <input type="text" id="res-surprise" placeholder="Ex: Gâteau d'anniversaire...">
+          </div>
+        </div>
+      </div>
+
+      <!-- BOUTON -->
+      <button class="btn-submit-res" onclick="soumettreReservation()">
+        Soumettre ma réservation
+      </button>
+
+      <p id="res-message" class="form-message"></p>
+      <!-- SECTION AVIS -->
+<div id="section-avis" style="display:none">
+  <div class="vvip-title">⭐ Laisser un avis</div>
+  <div class="form-grid">
+    <div class="form-group">
+      <label>Note</label>
+      <select id="avis-note">
+        <option value="5">⭐⭐⭐⭐⭐ Excellent</option>
+        <option value="4">⭐⭐⭐⭐ Très bien</option>
+        <option value="3">⭐⭐⭐ Bien</option>
+        <option value="2">⭐⭐ Passable</option>
+        <option value="1">⭐ Mauvais</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Commentaire</label>
+      <input type="text" id="avis-commentaire" placeholder="Votre avis...">
+    </div>
+  </div>
+  <button class="btn-submit-res" onclick="soumettreAvis()">
+    Envoyer mon avis
+  </button>
+  <p id="avis-message" class="form-message"></p>
+</div>
+
+  </div>
+
+  <script src="../js/reservation.js"></script>
+</body>
+</html>

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Administration — Royal Grill</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/admin.css">
+</head>
+<body>
+
+  <!-- PAGE CONNEXION ADMIN -->
+  <div id="page-login">
+    <div class="login-box">
+      <h1 class="login-title">Royal <em>Grill</em></h1>
+      <div class="login-divider"></div>
+      <p class="login-sub">Administration</p>
+      <div class="form-group">
+        <label>Code d'accès</label>
+        <input type="password" id="admin-code" placeholder="••••" maxlength="4">
+      </div>
+      <button class="btn-submit" id="btn-login">Accéder</button>
+      <p id="login-message" class="form-message"></p>
+    </div>
+  </div>
+
+  <!-- PAGE ADMINISTRATION -->
+  <div id="page-admin" style="display:none">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-logo">
+        Royal <em>Grill</em>
+      </div>
+      <div class="sidebar-label">Administration</div>
+      <nav class="sidebar-nav">
+        <button class="nav-item active" onclick="switchPage('dashboard', this)">
+          📊 Tableau de bord
+        </button>
+        <button class="nav-item" onclick="switchPage('tables', this)">
+          🍽️ Gestion tables & clients
+        </button>
+        <button class="nav-item" onclick="switchPage('historique', this)">
+          📅 Historiques
+        </button>
+        <button class="nav-item" onclick="switchPage('avis', this)">
+          ⭐ Avis clients
+        </button>
+      </nav>
+      <button class="btn-deconnexion" onclick="deconnexion()">
+        Déconnexion
+      </button>
+    </aside>
+
+    <!-- CONTENU PRINCIPAL -->
+    <main class="main-content">
+
+      <!-- TABLEAU DE BORD -->
+      <section id="page-dashboard" class="admin-page active">
+        <div class="page-header">
+          <span class="page-tag">Vue d'ensemble</span>
+          <h2 class="page-title">Tableau de <em>bord</em></h2>
+          <div class="page-divider"></div>
+        </div>
+
+        <!-- Statistiques -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon">🍽️</div>
+            <div class="stat-val" id="stat-total-tables">0</div>
+            <div class="stat-lbl">Tables totales</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">🟢</div>
+            <div class="stat-val" id="stat-tables-libres">0</div>
+            <div class="stat-lbl">Tables libres</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">🔴</div>
+            <div class="stat-val" id="stat-tables-occupees">0</div>
+            <div class="stat-lbl">Tables occupées</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">📋</div>
+            <div class="stat-val" id="stat-total-res">0</div>
+            <div class="stat-lbl">Réservations</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">👥</div>
+            <div class="stat-val" id="stat-total-clients">0</div>
+            <div class="stat-lbl">Clients</div>
+          </div>
+        </div>
+
+        <!-- Réservations récentes -->
+        <div class="section-card">
+          <h3 class="section-card-title">Réservations récentes</h3>
+          <div id="liste-reservations" class="res-list"></div>
+        </div>
+      </section>
+
+      <!-- GESTION TABLES & CLIENTS -->
+      <section id="page-tables" class="admin-page">
+        <div class="page-header">
+          <span class="page-tag">Gestion</span>
+          <h2 class="page-title">Tables & <em>Clients</em></h2>
+          <div class="page-divider"></div>
+        </div>
+
+        <!-- Gestion tables -->
+        <div class="section-card">
+          <h3 class="section-card-title">Tables du restaurant</h3>
+
+          <!-- Ajouter une table -->
+          <div class="form-inline">
+            <input type="text" id="new-table-nom" placeholder="Nom (ex: S31)">
+            <select id="new-table-capacite">
+              <option value="2">2 personnes</option>
+              <option value="4">4 personnes</option>
+              <option value="6">6 personnes</option>
+            </select>
+            <select id="new-table-formule">
+              <option value="standard">Standard</option>
+              <option value="vip">VIP</option>
+              <option value="vvip">VVIP</option>
+            </select>
+            <button class="btn-gold" onclick="ajouterTable()">+ Ajouter</button>
+          </div>
+
+          <div id="liste-tables" class="tables-list"></div>
+        </div>
+
+        <!-- Gestion clients -->
+        <div class="section-card">
+          <h3 class="section-card-title">Clients enregistrés</h3>
+          <div id="liste-clients" class="clients-list"></div>
+        </div>
+      </section>
+
+      <!-- HISTORIQUES -->
+      <section id="page-historique" class="admin-page">
+        <div class="page-header">
+          <span class="page-tag">Historiques</span>
+          <h2 class="page-title">Toutes les <em>réservations</em></h2>
+          <div class="page-divider"></div>
+        </div>
+        <div class="section-card">
+          <div id="liste-historique" class="res-list"></div>
+        </div>
+      </section>
+
+      <!-- AVIS CLIENTS -->
+      <section id="page-avis" class="admin-page">
+        <div class="page-header">
+          <span class="page-tag">Avis</span>
+          <h2 class="page-title">Avis <em>clients</em></h2>
+          <div class="page-divider"></div>
+        </div>
+        <div class="section-card">
+          <div id="liste-avis" class="avis-list"></div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <script src="../js/admin.js"></script>
+</body>
+</html>

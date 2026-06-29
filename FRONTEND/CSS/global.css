@@ -1,0 +1,53 @@
+/* ═══════════════════════════════════════
+   ROYAL GRILL — Styles globaux
+   ═══════════════════════════════════════ */
+
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --gold:          #D4AA50;
+  --gold-light:    #EDD98A;
+  --gold-dark:     #9B7518;
+  --deep:          #080808;
+  --surface:       #0F0F0F;
+  --surface2:      #181818;
+  --surface3:      #222222;
+  --text:          #FFFFFF;
+  --text-muted:    #C8BFA0;
+  --text-dim:      #8A8070;
+  --border:        rgba(212,170,80,0.28);
+  --border-strong: rgba(212,170,80,0.65);
+  --success:       #1D9E75;
+  --error:         #E24B4A;
+  --warning:       #D4A017;
+}
+
+body {
+  font-family: 'Jost', sans-serif;
+  background: var(--deep);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--deep); }
+::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 2px; }
+
+a { text-decoration: none; color: inherit; }
+button { cursor: pointer; font-family: 'Jost', sans-serif; }
+
+/* ═══════════════════════════════════════
+   RESPONSIVE GLOBAL
+   ═══════════════════════════════════════ */
+@media (max-width: 768px) {
+  body { font-size: 15px; }
+}
+
+@media (max-width: 480px) {
+  body { font-size: 14px; }
+}
